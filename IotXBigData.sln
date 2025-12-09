@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IotXBigData.Api", "IotXBigData.Api\IotXBigData.Api.csproj", "{6BD40B50-C15C-4644-A2B9-6E1EDF2E633A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IotXBigData.Kafka.Producer", "IotXBigData.Kafka.Producer\IotXBigData.Kafka.Producer.csproj", "{893893A5-356C-49F1-B7A8-4F1D7E5DBDB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IotXBigData.Shared", "IotXBigData.Shared\IotXBigData.Shared.csproj", "{EE92A749-1863-44DC-AFFE-52460EC64D89}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BD40B50-C15C-4644-A2B9-6E1EDF2E633A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BD40B50-C15C-4644-A2B9-6E1EDF2E633A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BD40B50-C15C-4644-A2B9-6E1EDF2E633A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BD40B50-C15C-4644-A2B9-6E1EDF2E633A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893893A5-356C-49F1-B7A8-4F1D7E5DBDB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893893A5-356C-49F1-B7A8-4F1D7E5DBDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893893A5-356C-49F1-B7A8-4F1D7E5DBDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893893A5-356C-49F1-B7A8-4F1D7E5DBDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE92A749-1863-44DC-AFFE-52460EC64D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE92A749-1863-44DC-AFFE-52460EC64D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE92A749-1863-44DC-AFFE-52460EC64D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE92A749-1863-44DC-AFFE-52460EC64D89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
