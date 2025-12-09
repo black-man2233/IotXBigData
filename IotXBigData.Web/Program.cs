@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRadzenComponents();
 
+builder.Logging.AddConfiguration(
+    builder.Configuration.GetSection("Logging"));
 
 // Add MudBlazor services
 builder.Services.AddMudServices();

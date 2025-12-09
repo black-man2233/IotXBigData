@@ -11,7 +11,7 @@ class Program
         var config = new ConsumerConfig
         {
             BootstrapServers = "192.168.39.55",
-            GroupId = "kevin-Group",
+            GroupId = "console-consumer",
             AutoOffsetReset = AutoOffsetReset.Earliest
         };
 
