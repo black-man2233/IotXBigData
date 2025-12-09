@@ -1,6 +1,110 @@
+@page "/"
 @page "/Gauges"
+
+@using System.Collections.ObjectModel
+@using Newtonsoft.Json
+@using Radzen
+@using Confluent.Kafka
+@using IotXBigData.Shared.Models
+
+@rendermode InteractiveServer
+
 <h3>Gauges</h3>
 
+<RadzenStack class="rz-p-0 rz-p-md-6 rz-p-lg-12" Orientation="Radzen.Orientation.Horizontal"
+    AlignItems="Radzen.AlignItems.Start">
+    <RadzenCard Variant="Radzen.Variant.Outlined">
+        <RadzenRadialGauge Style="width: 100%; height: 300px;">
+            <RadzenRadialGaugeScale StartAngle="-150" EndAngle="150" Step="20" Min="0" Max="260"
+                TickPosition=@tickPosition>
+                <RadzenRadialGaugeScalePointer Value=@temp Length="0.6" ShowValue=true>
+                    <Template Context="pointer">
+                        <RadzenStack AlignItems="Radzen.AlignItems.Center" Gap="0" class="rz-mt-4">
+                            <RadzenText TextStyle="TextStyle.H5" class="rz-m-0"><strong>@pointer.Value</strong>
+                            </RadzenText>
+                            <RadzenText TextStyle="TextStyle.Caption">°C</RadzenText>
+                        </RadzenStack>
+                    </Template>
+                </RadzenRadialGaugeScalePointer>
+                <RadzenRadialGaugeScaleRange From="0" To="90" Fill="green" />
+                <RadzenRadialGaugeScaleRange From="90" To="140" Fill="orange" />
+                <RadzenRadialGaugeScaleRange From="140" To="260" Fill="red" />
+            </RadzenRadialGaugeScale>
+        </RadzenRadialGauge>
+        <RadzenText TextStyle="TextStyle.H5" class="rz-m-0"><strong>Temperature</strong></RadzenText>
+    </RadzenCard>
+
+    <RadzenCard Variant="Radzen.Variant.Outlined">
+        <RadzenRadialGauge Style="width: 100%; height: 300px;">
+            <RadzenRadialGaugeScale StartAngle="-150" EndAngle="150" Step="20" Min="0" Max="260"
+                TickPosition=@tickPosition>
+                <RadzenRadialGaugeScalePointer Value=@humidity Length="0.6" ShowValue=true>
+                    <Template Context="pointer">
+                        <RadzenStack AlignItems="Radzen.AlignItems.Center" Gap="0" class="rz-mt-4">
+                            <RadzenText TextStyle="TextStyle.H5" class="rz-m-0"><strong>@pointer.Value</strong>
+                            </RadzenText>
+                            <RadzenText TextStyle="TextStyle.Caption">°C</RadzenText>
+                        </RadzenStack>
+                    </Template>
+                </RadzenRadialGaugeScalePointer>
+                <RadzenRadialGaugeScaleRange From="0" To="90" Fill="green" />
+                <RadzenRadialGaugeScaleRange From="90" To="140" Fill="orange" />
+                <RadzenRadialGaugeScaleRange From="140" To="260" Fill="red" />
+            </RadzenRadialGaugeScale>
+        </RadzenRadialGauge>
+        <RadzenText TextStyle="TextStyle.H5" class="rz-m-0"><strong>Humidity</strong></RadzenText>
+    </RadzenCard>
+
+</RadzenStack>
+
 @code {
-    
+    bool showValue = true;
+    double temp = double.NaN;
+    double humidity = double.NaN;
+
+    IEnumerable<GaugeTickPosition> tickPositions = Enum.GetValues(typeof(GaugeTickPosition)).Cast<GaugeTickPosition>();
+    GaugeTickPosition tickPosition = GaugeTickPosition.Inside;
+
+
+    public string response { get; set; } = "";
+
+
+    public async Task InitializeAsync()
+    {
+        @* var config = new ConsumerConfig
+        {
+            BootstrapServers = "192.168.39.58",
+            GroupId = "kevin-Group",
+            AutoOffsetReset = AutoOffsetReset.Earliest
+        }; *@
+
+         var config = new ConsumerConfig
+        {
+            BootstrapServers = "192.168.39.55",
+            GroupId = "kevin-Group",
+            AutoOffsetReset = AutoOffsetReset.Earliest
+        };
+
+        _ = Task.Run(async () =>
+        {
+            using var consumer = new ConsumerBuilder<string, string>(config).Build();
+            consumer.Subscribe("Kevin_Zilas_Mathias");
+            while (true)
+            {
+                var cr = consumer.Consume();
+                response = cr.Message.Value;
+                var dataObject = JsonConvert.DeserializeObject<TempDTO>(response.ToString());
+                Console.WriteLine($"response{response} \n\n\n");
+                Console.WriteLine($"{cr.Message}");
+                Console.WriteLine($"{cr.Message}");
+                
+                temp = dataObject.Temperature;
+                humidity = dataObject.Humidity;
+
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(TimeSpan.FromSeconds(1));
+
+            }
+        });
+    }
 }
